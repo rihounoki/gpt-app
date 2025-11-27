@@ -1,16 +1,14 @@
-import streamlit as st  # フロントエンドを扱うstreamlitの機能をインポート
+import streamlit as st
+import openai
 import os
-from dotenv import load_dotenv  # ローカル環境用に.envファイルを読み込むためのライブラリ
+from dotenv import load_dotenv
 
-# OpenAI APIの設定（Streamlit Cloud用とローカル用の両方に対応）
+# OpenAI APIキーの設定（Streamlit Cloud用とローカル用の両方に対応）
 try:
-    api_key = st.secrets["OPENAI_API_KEY"]
+    openai.api_key = st.secrets["OPENAI_API_KEY"]
 except Exception:
     load_dotenv()
-    api_key = os.getenv("OPENAI_API_KEY")
-
-# OpenAIの機能をclientに代入
-client = OpenAI(api_key=api_key)
+    openai.api_key = os.getenv("OPENAI_API_KEY")
 
 # chatGPTが可能な文章のテイストの設定一覧を作成
 content_kind_of = [
@@ -44,15 +42,14 @@ def run_gpt(content_text_to_gpt, content_kind_of_to_gpt, content_maxStr_to_gpt):
         + "また、文章は" + content_kind_of_to_gpt + "にしてください。"
     )
 
-    response = client.chat.completions.create(
-        model="gpt-4o-mini",
+    response = openai.ChatCompletion.create(
+        model="gpt-4o",
         messages=[
             {"role": "user", "content": request_to_gpt},
         ],
     )
 
-    output_content = response.choices[0].message.content.strip()
-    return output_content
+    return response.choices[0].message.content.strip()
 
 # Streamlit UI
 st.title('GPTに記事書かせるアプリ')

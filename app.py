@@ -1,6 +1,5 @@
 import streamlit as st  # フロントエンドを扱うstreamlitの機能をインポート
 import os
-from openai import OpenAI  # OpenAIのChatGPTの機能をインポート
 from dotenv import load_dotenv  # ローカル環境用に.envファイルを読み込むためのライブラリ
 
 # OpenAI APIの設定（Streamlit Cloud用とローカル用の両方に対応）
@@ -96,3 +95,4 @@ if st.sidebar.button('記事を書かせる'):
         )
     else:
         warning_text.write("書かせたい内容が入力されていません")
+

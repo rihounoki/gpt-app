@@ -43,7 +43,7 @@ def run_gpt(content_text_to_gpt, content_kind_of_to_gpt, content_maxStr_to_gpt):
     )
 
     response = openai.ChatCompletion.create(
-        model="gpt-4o",
+        model="gpt-4",
         messages=[
             {"role": "user", "content": request_to_gpt},
         ],
@@ -92,4 +92,3 @@ if st.sidebar.button('記事を書かせる'):
         )
     else:
         warning_text.write("書かせたい内容が入力されていません")
-
